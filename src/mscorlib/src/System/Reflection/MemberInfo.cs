@@ -24,8 +24,16 @@ namespace System.Reflection
 #endif
     public abstract class MemberInfo : ICustomAttributeProvider, _MemberInfo
     {
+        protected java.lang.Class javaClass;
+
         #region Constructor
+        //TODO: Remove standart ctor
         protected MemberInfo() { }
+
+        protected MemberInfo(java.lang.Class jclass)
+        {
+            this.javaClass = jclass;
+        }
         #endregion
 
         #region Internal Methods

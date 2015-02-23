@@ -33,7 +33,7 @@ namespace CIL2Java.Maps
                 get
                 {
                     if ((index == -1) || (index >= length))
-                        throw new InvalidOperationException(Local.GetText("The position is not valid."));
+                        throw new InvalidOperationException("The position is not valid.");
                     return str.charAt(index);
                 }
             }
@@ -520,7 +520,7 @@ namespace CIL2Java.Maps
             if (count < 0)
                 throw new ArgumentOutOfRangeException("count");
             if ((options != StringSplitOptions.None) && (options != StringSplitOptions.RemoveEmptyEntries))
-                throw new ArgumentException(Local.GetText("Illegal enum value: {0}.", options));
+                throw new ArgumentException(String.Format("Illegal enum value: {0}.", options));
             if (((self.Length == 0) && (options == StringSplitOptions.RemoveEmptyEntries)) || (count == 0))
                 return Utils.EmptyArray<string>.value;
             if (count == 1)
@@ -699,10 +699,13 @@ namespace CIL2Java.Maps
         {
             switch (nf)
             {
+                //TODO: WTF FEATURE_NORM_IDNA_ONLY?????
+#if !FEATURE_NORM_IDNA_ONLY
                 case NormalizationForm.FormC: return java.text.Normalizer.Form.NFC;
                 case NormalizationForm.FormD: return java.text.Normalizer.Form.NFD;
                 case NormalizationForm.FormKC: return java.text.Normalizer.Form.NFKC;
                 case NormalizationForm.FormKD: return java.text.Normalizer.Form.NFKD;
+#endif
                 default: return java.text.Normalizer.Form.NFC;
             }
         }
@@ -786,7 +789,7 @@ namespace CIL2Java.Maps
             if (value == null)
                 return 1;
             if (!(value is string))
-                throw new ArgumentException(Local.GetText("value must be string"));
+                throw new ArgumentException("value must be string");
             return Intrinsics.ToJavaString(self).compareTo((string)value);
         }
 

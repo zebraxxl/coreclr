@@ -86,7 +86,7 @@ namespace CIL2Java.VES
         public static float Ckfinite(float val)
         {
             if (javaFloat.isNaN(val) || javaFloat.isInfinite(val))
-                throw new ArithmeticException(Local.GetText("value is NaN or Infinity"));
+                throw new ArithmeticException("value is NaN or Infinity");
             return val;
         }
 
@@ -94,7 +94,7 @@ namespace CIL2Java.VES
         public static double Ckfinite(double val)
         {
             if (javaDouble.isNaN(val) || javaDouble.isInfinite(val))
-                throw new ArithmeticException(Local.GetText("value is NaN or Infinity"));
+                throw new ArithmeticException("value is NaN or Infinity");
             return val;
         }
 

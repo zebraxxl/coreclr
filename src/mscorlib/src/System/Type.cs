@@ -55,8 +55,12 @@ namespace System {
         private static Binder defaultBinder;
 
 
-        protected Type() {}        
-
+        //TODO: Remove standart ctor
+        protected Type() { }        
+        public Type(java.lang.Class jclass)
+            : base(jclass)
+        {
+        }
 
         // MemberInfo Methods....
         // The Member type Field.
