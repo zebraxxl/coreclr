@@ -848,62 +848,13 @@ namespace System.Reflection
         [System.Security.SecuritySafeCritical]
         public override Delegate CreateDelegate(Type delegateType)
         {
-            StackCrawlMark stackMark = StackCrawlMark.LookForMyCaller;
-
-            // This API existed in v1/v1.1 and only expected to create closed
-            // instance delegates. Constrain the call to BindToMethodInfo to
-            // open delegates only for backwards compatibility. But we'll allow
-            // relaxed signature checking and open static delegates because
-            // there's no ambiguity there (the caller would have to explicitly
-            // pass us a static method or a method with a non-exact signature
-            // and the only change in behavior from v1.1 there is that we won't
-            // fail the call).
-            return CreateDelegateInternal(
-                delegateType,
-                null,
-                DelegateBindingFlags.OpenDelegateOnly | DelegateBindingFlags.RelaxedSignature,
-                ref stackMark);
+            throw new NotImplementedException();
         }
 
         [System.Security.SecuritySafeCritical]
         public override Delegate CreateDelegate(Type delegateType, Object target)
         {
-            StackCrawlMark stackMark = StackCrawlMark.LookForMyCaller;
-
-            // This API is new in Whidbey and allows the full range of delegate
-            // flexability (open or closed delegates binding to static or
-            // instance methods with relaxed signature checking). The delegate
-            // can also be closed over null. There's no ambiguity with all these
-            // options since the caller is providing us a specific MethodInfo.
-            return CreateDelegateInternal(
-                delegateType,
-                target,
-                DelegateBindingFlags.RelaxedSignature,
-                ref stackMark);
-        }
-
-        [System.Security.SecurityCritical]
-        private Delegate CreateDelegateInternal(Type delegateType, Object firstArgument, DelegateBindingFlags bindingFlags, ref StackCrawlMark stackMark)
-        {
-            // Validate the parameters.
-            if (delegateType == null)
-                throw new ArgumentNullException("delegateType");
-            Contract.EndContractBlock();
-
-            RuntimeType rtType = delegateType as RuntimeType;
-            if (rtType == null)
-                throw new ArgumentException(Environment.GetResourceString("Argument_MustBeRuntimeType"), "delegateType");
-
-            if (!rtType.IsDelegate())
-                throw new ArgumentException(Environment.GetResourceString("Arg_MustBeDelegate"), "delegateType");
-
-            Delegate d = Delegate.CreateDelegateInternal(rtType, this, firstArgument, bindingFlags, ref stackMark);
-            if (d == null)
-            {
-                throw new ArgumentException(Environment.GetResourceString("Arg_DlgtTargMeth"));
-            }
-
-            return d;
+            throw new NotImplementedException();
         }
 
         #endregion

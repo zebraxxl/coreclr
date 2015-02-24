@@ -526,34 +526,16 @@ namespace System.Reflection.Emit
 
         [System.Security.SecuritySafeCritical]  // auto-generated
         [System.Runtime.InteropServices.ComVisible(true)]
-        public sealed override Delegate CreateDelegate(Type delegateType) {
-            if (m_restrictedSkipVisibility)
-            {
-                // Compile the method since accessibility checks are done as part of compilation.
-                GetMethodDescriptor();
-                System.Runtime.CompilerServices.RuntimeHelpers._CompileMethod(m_methodHandle);
-            }
-
-            MulticastDelegate d = (MulticastDelegate)Delegate.CreateDelegateNoSecurityCheck(delegateType, null, GetMethodDescriptor());
-            // stash this MethodInfo by brute force.  
-            d.StoreDynamicMethod(GetMethodInfo());
-            return d;
+        public sealed override Delegate CreateDelegate(Type delegateType)
+        {
+            throw new NotImplementedException();
         }
 
         [System.Security.SecuritySafeCritical]  // auto-generated
         [System.Runtime.InteropServices.ComVisible(true)]
-        public sealed override Delegate CreateDelegate(Type delegateType, Object target) {
-            if (m_restrictedSkipVisibility)
-            {
-                // Compile the method since accessibility checks are done as part of compilation
-                GetMethodDescriptor();
-                System.Runtime.CompilerServices.RuntimeHelpers._CompileMethod(m_methodHandle);
-            }
-
-            MulticastDelegate d = (MulticastDelegate)Delegate.CreateDelegateNoSecurityCheck(delegateType, target, GetMethodDescriptor());
-            // stash this MethodInfo by brute force. 
-            d.StoreDynamicMethod(GetMethodInfo());
-            return d;
+        public sealed override Delegate CreateDelegate(Type delegateType, Object target)
+        {
+            throw new NotImplementedException();
         }
 
 #if FEATURE_APPX

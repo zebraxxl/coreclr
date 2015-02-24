@@ -197,63 +197,7 @@ namespace System
         [System.Security.SecurityCritical]
         private Delegate GetDelegate(DelegateEntry de, int index)
         {
-            Delegate d;
-
-            try
-            {
-                if (de.methodName == null || de.methodName.Length == 0)
-                    ThrowInsufficientState("MethodName");
-
-                if (de.assembly == null || de.assembly.Length == 0)
-                    ThrowInsufficientState("DelegateAssembly");
-
-                if (de.targetTypeName == null || de.targetTypeName.Length == 0)
-                    ThrowInsufficientState("TargetTypeName");
-
-                // We cannot use Type.GetType directly, because of AppCompat - assembly names starting with '[' would fail to load.
-                RuntimeType type = (RuntimeType)Assembly.GetType_Compat(de.assembly, de.type);
-                RuntimeType targetType = (RuntimeType)Assembly.GetType_Compat(de.targetTypeAssembly, de.targetTypeName);
-
-                // If we received the new style delegate encoding we already have the target MethodInfo in hand.
-                if (m_methods != null)
-                {
-#if FEATURE_REMOTING                
-                    Object target = de.target != null ? RemotingServices.CheckCast(de.target, targetType) : null;
-#else
-                    if(!targetType.IsInstanceOfType(de.target))
-                        throw new InvalidCastException();
-                    Object target=de.target;
-#endif
-                    d = Delegate.CreateDelegateNoSecurityCheck(type, target, m_methods[index]);
-                }
-                else
-                {
-                    if (de.target != null)
-#if FEATURE_REMOTING                
-                        d = Delegate.CreateDelegate(type, RemotingServices.CheckCast(de.target, targetType), de.methodName);
-#else
-                {
-                    if(!targetType.IsInstanceOfType(de.target))
-                        throw new InvalidCastException();
-                     d = Delegate.CreateDelegate(type, de.target, de.methodName);
-                }
-#endif
-                    else
-                        d = Delegate.CreateDelegate(type, targetType, de.methodName);
-                }
-
-                if ((d.Method != null && !d.Method.IsPublic) || (d.Method.DeclaringType != null && !d.Method.DeclaringType.IsVisible))
-                    new ReflectionPermission(ReflectionPermissionFlag.MemberAccess).Demand();
-            }
-            catch (Exception e)
-            {
-                if (e is SerializationException)
-                    throw e;
-
-                throw new SerializationException(e.Message, e);
-            }
-
-            return d;
+            throw new NotImplementedException();
         }
         #endregion
 
@@ -261,29 +205,7 @@ namespace System
         [System.Security.SecurityCritical]  // auto-generated
         public Object GetRealObject(StreamingContext context)
         {
-            int count = 0;
-            for (DelegateEntry de = m_delegateEntry; de != null; de = de.Entry)
-                count++;
-
-            int maxindex = count - 1;
-
-            if (count == 1)
-            {
-                return GetDelegate(m_delegateEntry, 0);
-            }
-            else
-            {
-                object[] invocationList = new object[count];
-                
-                for (DelegateEntry de = m_delegateEntry; de != null; de = de.Entry)
-                {
-                    // Be careful to match the index we pass to GetDelegate (used to look up extra information for each delegate) to
-                    // the order we process the entries: we're actually looking at them in reverse order.
-                    --count;
-                    invocationList[count] = GetDelegate(de, maxindex - count);
-                }
-                return ((MulticastDelegate)invocationList[0]).NewMulticastDelegate(invocationList, invocationList.Length);
-            }
+            throw new NotImplementedException();
         }
         #endregion
 
